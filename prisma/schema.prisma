@@ -23,6 +23,7 @@ model customer {
   email String  @unique @db.VarChar(255)
   password String? @db.VarChar(255)
   reservation reservation[]
+  session session[]
 }
 
 model reservation {
@@ -30,5 +31,12 @@ model reservation {
   customerId Int
   tableId Int
   table table @relation(fields: [tableId], references: [id])
+  customer customer @relation(fields: [customerId], references: [id])
+}
+
+model session {
+  id Int @id @default(autoincrement())
+  customerId Int 
+  token String
   customer customer @relation(fields: [customerId], references: [id])
 }
